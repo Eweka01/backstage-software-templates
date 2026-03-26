@@ -5,7 +5,7 @@ on:
     paths:
       - src/**
     branches:
-      - master
+      - main
 
 jobs:
   ci:
@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ricardoandre9707/${{values.app_name}}:${{ '${{ env.COMMIT_ID }}' }}
+          tags: eweka/${{values.app_name}}:${{ '${{ env.COMMIT_ID }}' }}
     outputs:
       commit_id: ${{ '${{ env.COMMIT_ID }}' }}
 
@@ -50,12 +50,24 @@ jobs:
         with:
           message: 'Updates values.yaml with commit ${{ '${{needs.ci.outputs.commit_id}}' }}'
 
-      - name: Install argocd
+      - name: install argocd
         shell: bash
         run: |
-          curl -ksSL -o argocd https://argocd-server.argocd/download/argocd-linux-amd64
+          ARCH=$(uname -m)
+          if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+            FILE=argocd-linux-arm64
+          else
+            FILE=argocd-linux-amd64
+          fi
+
+          rm -f argocd
+          sudo rm -f /usr/local/bin/argocd
+
+          curl -fSL -o argocd "https://github.com/argoproj/argo-cd/releases/latest/download/${FILE}"
           chmod +x argocd
-          sudo mv ./argocd /usr/local/bin/argocd
+          sudo mv argocd /usr/local/bin/argocd
+
+          /usr/local/bin/argocd version --client
 
       - name: argocd login
         shell: bash
@@ -71,7 +83,7 @@ jobs:
         run: |
 
           # Connects the argocd repo
-          repo="https://github.com/ricardoandre-97/${{values.app_name}}.git"
+          repo="https://github.com/eweka01/${{values.app_name}}.git"
           argocd repo list | grep -q $repo || argocd repo add $repo
 
           # Creates the argocd app
