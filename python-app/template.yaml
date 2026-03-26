@@ -42,7 +42,7 @@ spec:
       action: publish:github
       input:
         description: This is ${{ parameters.component_id }}
-        repoUrl: github.com?owner=eweka01&repo=${{parameters.component_id}}
+        repoUrl: github.com?owner=octal-engine&repo=${{parameters.component_id}}
         protectDefaultBranch: false
         repoVisibility: public
 
