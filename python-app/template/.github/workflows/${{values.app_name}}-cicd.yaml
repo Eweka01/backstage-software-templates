@@ -54,7 +54,7 @@ jobs:
             sudo mv yq /usr/local/bin/yq
           fi
           yq --version
-          yq eval -i '.image.tag = "${{ '${{ needs.ci.outputs.commit_id }}' }}"' charts/python-app/values.yaml
+          yq eval -i '.image.tag = "${{ '${{ needs.ci.outputs.commit_id }}' }}"' charts/${{values.app_name}}/values-${{values.app_env}}.yaml
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
