@@ -10,11 +10,18 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    outputs:
+      commit_id: ${{ '${{ steps.commit.outputs.commit_id }}' }}
     steps:
 
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Shorten commit id
+        id: commit
         shell: bash
         run: |
+          echo "commit_id=${GITHUB_SHA::6}" >> "$GITHUB_OUTPUT"
           echo "COMMIT_ID=${GITHUB_SHA::6}" >> "$GITHUB_ENV"
       -
         name: Login to Docker Hub
@@ -28,8 +35,6 @@ jobs:
         with:
           push: true
           tags: eweka/${{values.app_name}}:${{ '${{ env.COMMIT_ID }}' }}
-    outputs:
-      commit_id: ${{ '${{ env.COMMIT_ID }}' }}
 
   cd:
     needs: ci
