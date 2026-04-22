@@ -6,7 +6,7 @@ For fun, it shows you a random dev excuse + a random cat
 
 # How to access the app?
 
-You can access the app by accessing this URL: `${{values.app_name}}-${{values.app_env}}.apps.gabrieleweka.dev/api/v1/info`
+You can access the app by accessing this URL: `${{values.app_name}}-${{values.app_env}}.gabrieleweka.dev/api/v1/info`
 
 # Extra info?
 
