@@ -6,7 +6,7 @@ For fun, it shows you a random dev excuse + a random cat
 
 # How to access the app?
 
-You can access the app by accessing this URL: `${{values.app_name}}-${{values.app_env}}.test.com/api/v1/info` 
+You can access the app by accessing this URL: `${{values.app_name}}-${{values.app_env}}.test.com/api/v1/info`
 
 # Extra info?
 
@@ -17,4 +17,28 @@ This application has two API endpoints:
 
 Here you could expand on what each of these endpoints do.
 
+---
 
+# Platform URLs & Credentials
+
+All infrastructure is accessible from this workstation. Credentials below are read-only (safe to share). For admin access, ping **@Eweka01**.
+
+| Service | URL | Auth |
+|---|---|---|
+| **Backstage** (this portal) | https://backstage.test.com | Sign in with GitHub |
+| **ArgoCD** | https://argocd.test.com | `viewer` / `viewer123` (read-only) |
+| **Grafana** | http://grafana.test.com | No login needed (anonymous Viewer) |
+| **Prometheus** | http://prometheus.test.com | No auth |
+| **This app's repo** | https://github.com/octal-engine/${{values.app_name}} | GitHub |
+| **This app's CI** | https://github.com/octal-engine/${{values.app_name}}/actions | GitHub |
+| **Docker image** | `eweka/${{values.app_name}}:<commit-sha>` | public on Docker Hub |
+
+## ArgoCD read-only scope
+
+The `viewer` account can **see** applications, repos, projects, and pod logs, but **cannot create, sync, or delete** anything. Safe to share for demos.
+
+## Grafana dashboards worth looking at
+
+- **Kubernetes / Compute Resources / Namespace (Pods)** — per-namespace CPU/memory
+- **Node Exporter / Nodes** — host-level metrics for the kind cluster
+- **CoreDNS** — DNS inside the cluster

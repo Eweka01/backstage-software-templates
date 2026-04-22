@@ -46,6 +46,8 @@ spec:
         defaultBranch: main
         protectDefaultBranch: false
         repoVisibility: public
+        topics:
+          - scaffolded
 
     - id: register
       name: Register
