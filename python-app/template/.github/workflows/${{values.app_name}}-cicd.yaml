@@ -8,6 +8,30 @@ on:
       - main
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Super-Linter
+        uses: super-linter/super-linter/slim@v6
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ '${{ secrets.GITHUB_TOKEN }}' }}
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_JSCPD: false
+
+      - name: Trivy filesystem scan
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          severity: CRITICAL,HIGH
+          exit-code: '0'
+          ignore-unfixed: true
+
   ci:
     runs-on: ubuntu-latest
     outputs:
@@ -35,6 +59,14 @@ jobs:
         with:
           push: true
           tags: eweka/${{values.app_name}}:${{ '${{ env.COMMIT_ID }}' }}
+
+      - name: Trivy image scan
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: eweka/${{values.app_name}}:${{ '${{ env.COMMIT_ID }}' }}
+          severity: CRITICAL,HIGH
+          exit-code: '1'
+          ignore-unfixed: true
 
   cd:
     needs: ci
