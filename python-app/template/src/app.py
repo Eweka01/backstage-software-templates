@@ -26,7 +26,9 @@ def home():
     return render_template(
         'index.html',
         cat_img=f"images-front/cat{random.randint(1, 7)}.gif",
-        dev_excuse=random.choice(dev_excuses)
+        dev_excuse=random.choice(dev_excuses),
+        app_name='${{values.app_name}}',
+        app_env='${{values.app_env}}'
     )
 
 @app.route('/api/v1/info')

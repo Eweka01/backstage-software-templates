@@ -3,91 +3,227 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>{{ app_name }} · {{ app_env }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Ubuntu', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      margin: 0;
       color: #fff;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
     }
-
     .bg-video {
       position: fixed;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 100%;
+      top: 0; left: 0;
+      min-width: 100%; min-height: 100%;
       object-fit: cover;
       z-index: -1;
+      filter: brightness(0.5);
+    }
+    .env-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .env-dev  { background: #3b82f6; color: #fff; }
+    .env-prod { background: #ef4444; color: #fff; }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+    .subtitle {
+      opacity: 0.7;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
     }
 
-    .wrapper {
-      position: relative;
-      top: -40px;
-      background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
-      backdrop-filter: blur(8px); /* adds a smoky glass effect */
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      margin-bottom: 50px;
-      padding: 50px 40px;
-      width: 90%;
-      max-width: 600px;
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      max-width: 1000px;
+    }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.6;
+      margin-bottom: 16px;
+    }
+
+    .fun .image-wrap { text-align: center; }
+    .fun img {
+      width: 200px; height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      margin-bottom: 14px;
+    }
+    .fun .excuse {
+      font-size: 1.05rem;
+      font-style: italic;
+      opacity: 0.9;
       text-align: center;
     }
 
-    .headline {
-      font-size: 1.6rem;
-      font-weight: 400;
-      margin-bottom: 50px;
-      color: #f5f5f5;
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
     }
+    .info-row:last-child { border-bottom: none; }
+    .info-row .k { opacity: 0.55; }
+    .info-row .v { color: #86efac; word-break: break-all; text-align: right; }
 
-    .image-container img {
-      width: 300px;
-      height: 300px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin: 0 auto 20px auto;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    .links { grid-column: span 2; }
+    @media (max-width: 720px) { .links { grid-column: span 1; } }
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .link-grid a {
       display: block;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .link-grid a:hover {
+      background: rgba(255,255,255,0.14);
+      transform: translateY(-1px);
+    }
+    .link-grid .label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.55;
+      margin-bottom: 4px;
     }
 
-    .buttons {
-      margin-top: 10px;
-      color: #aaa;
-      font-size: 0.9rem;
+    footer {
+      margin-top: 48px;
+      font-size: 0.75rem;
+      opacity: 0.5;
+      font-family: 'JetBrains Mono', monospace;
     }
-
-
+    .pulse {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      margin-right: 6px;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
   </style>
 </head>
 <body>
-
   <video autoplay muted loop playsinline class="bg-video">
     <source src="images-front/bg.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
   </video>
 
-  <div class="wrapper">
-    <div class="content">
-      <div class="headline">{{ dev_excuse }}</div>
-      <div class="image-container">
+  <span class="env-badge env-{{ app_env }}">{{ app_env }}</span>
+  <h1>{{ app_name }}</h1>
+  <div class="subtitle"><span class="pulse"></span>scaffolded by Backstage · deployed by ArgoCD</div>
+
+  <div class="grid">
+
+    <div class="card fun">
+      <h2>For fun</h2>
+      <div class="image-wrap">
         <img src="{{ cat_img }}" alt="A thoughtful cat">
       </div>
+      <div class="excuse">"{{ dev_excuse }}"</div>
     </div>
+
+    <div class="card">
+      <h2>Live from <code>/api/v1/info</code></h2>
+      <div id="info">
+        <div class="info-row"><span class="k">loading…</span><span class="v"></span></div>
+      </div>
+    </div>
+
+    <div class="card links">
+      <h2>Platform</h2>
+      <div class="link-grid">
+        <a href="https://github.com/octal-engine/{{ app_name }}" target="_blank">
+          <span class="label">Source</span>GitHub repo
+        </a>
+        <a href="https://github.com/octal-engine/{{ app_name }}/actions" target="_blank">
+          <span class="label">CI / CD</span>GitHub Actions
+        </a>
+        <a href="https://backstage.test.com/catalog/default/component/{{ app_name }}" target="_blank">
+          <span class="label">Catalog</span>Backstage
+        </a>
+        <a href="https://argocd.test.com/applications/{{ app_name }}" target="_blank">
+          <span class="label">Deployment</span>ArgoCD
+        </a>
+        <a href="http://grafana.test.com" target="_blank">
+          <span class="label">Metrics</span>Grafana
+        </a>
+        <a href="https://backstage.test.com/docs/default/component/{{ app_name }}" target="_blank">
+          <span class="label">Docs</span>TechDocs
+        </a>
+      </div>
+    </div>
+
   </div>
 
+  <footer>v1 · {{ app_name }}-{{ app_env }}</footer>
+
+  <script>
+    async function refresh() {
+      try {
+        const r = await fetch('/api/v1/info', { cache: 'no-store' });
+        const d = await r.json();
+        const box = document.getElementById('info');
+        box.innerHTML = Object.entries(d).map(([k,v]) =>
+          `<div class="info-row"><span class="k">${k}</span><span class="v">${v}</span></div>`
+        ).join('');
+      } catch (e) {
+        document.getElementById('info').innerHTML =
+          `<div class="info-row"><span class="k">error</span><span class="v">${e.message}</span></div>`;
+      }
+    }
+    refresh();
+    setInterval(refresh, 5000);
+  </script>
 </body>
 </html>
