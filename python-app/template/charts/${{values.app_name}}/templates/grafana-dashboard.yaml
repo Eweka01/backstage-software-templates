@@ -56,13 +56,13 @@ data:
         {"type": "row", "title": "Resource usage", "gridPos": {"h": 1, "w": 24, "x": 0, "y": 5}, "id": 101},
 
         {"type": "timeseries", "id": 10, "title": "CPU usage (cores)", "gridPos": {"h": 8, "w": 12, "x": 0, "y": 6},
-          "targets": [{"expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"${{values.app_env}}\",pod=~\"${{values.app_name}}-.*\",image!=\"\"}[5m]))", "refId": "A", "legendFormat": "{{pod}}"}],
+          "targets": [{"expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"${{values.app_env}}\",pod=~\"${{values.app_name}}-.*\",image!=\"\"}[5m]))", "refId": "A", "legendFormat": "{{ `{{pod}}` }}"}],
           "fieldConfig": {"defaults": {"unit": "short", "custom": {"drawStyle": "line", "lineWidth": 2, "fillOpacity": 15}}},
           "options": {"legend": {"displayMode": "list", "placement": "bottom"}},
           "datasource": {"type": "prometheus", "uid": "prometheus"}},
 
         {"type": "timeseries", "id": 11, "title": "Memory working set (bytes)", "gridPos": {"h": 8, "w": 12, "x": 12, "y": 6},
-          "targets": [{"expr": "sum by (pod) (container_memory_working_set_bytes{namespace=\"${{values.app_env}}\",pod=~\"${{values.app_name}}-.*\",image!=\"\"})", "refId": "A", "legendFormat": "{{pod}}"}],
+          "targets": [{"expr": "sum by (pod) (container_memory_working_set_bytes{namespace=\"${{values.app_env}}\",pod=~\"${{values.app_name}}-.*\",image!=\"\"})", "refId": "A", "legendFormat": "{{ `{{pod}}` }}"}],
           "fieldConfig": {"defaults": {"unit": "bytes", "custom": {"drawStyle": "line", "lineWidth": 2, "fillOpacity": 15}}},
           "options": {"legend": {"displayMode": "list", "placement": "bottom"}},
           "datasource": {"type": "prometheus", "uid": "prometheus"}},
@@ -70,13 +70,13 @@ data:
         {"type": "row", "title": "Network (from kubelet/cAdvisor)", "gridPos": {"h": 1, "w": 24, "x": 0, "y": 14}, "id": 102},
 
         {"type": "timeseries", "id": 20, "title": "Network RX (bytes/s)", "gridPos": {"h": 7, "w": 12, "x": 0, "y": 15},
-          "targets": [{"expr": "sum by (pod) (rate(container_network_receive_bytes_total{namespace=\"${{values.app_env}}\",pod=~\"${{values.app_name}}-.*\"}[5m]))", "refId": "A", "legendFormat": "{{pod}}"}],
+          "targets": [{"expr": "sum by (pod) (rate(container_network_receive_bytes_total{namespace=\"${{values.app_env}}\",pod=~\"${{values.app_name}}-.*\"}[5m]))", "refId": "A", "legendFormat": "{{ `{{pod}}` }}"}],
           "fieldConfig": {"defaults": {"unit": "Bps", "custom": {"drawStyle": "line", "lineWidth": 2, "fillOpacity": 15}}},
           "options": {"legend": {"displayMode": "list", "placement": "bottom"}},
           "datasource": {"type": "prometheus", "uid": "prometheus"}},
 
         {"type": "timeseries", "id": 21, "title": "Network TX (bytes/s)", "gridPos": {"h": 7, "w": 12, "x": 12, "y": 15},
-          "targets": [{"expr": "sum by (pod) (rate(container_network_transmit_bytes_total{namespace=\"${{values.app_env}}\",pod=~\"${{values.app_name}}-.*\"}[5m]))", "refId": "A", "legendFormat": "{{pod}}"}],
+          "targets": [{"expr": "sum by (pod) (rate(container_network_transmit_bytes_total{namespace=\"${{values.app_env}}\",pod=~\"${{values.app_name}}-.*\"}[5m]))", "refId": "A", "legendFormat": "{{ `{{pod}}` }}"}],
           "fieldConfig": {"defaults": {"unit": "Bps", "custom": {"drawStyle": "line", "lineWidth": 2, "fillOpacity": 15}}},
           "options": {"legend": {"displayMode": "list", "placement": "bottom"}},
           "datasource": {"type": "prometheus", "uid": "prometheus"}}
