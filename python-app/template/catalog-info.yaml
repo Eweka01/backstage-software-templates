@@ -6,6 +6,25 @@ metadata:
   annotations:
     github.com/project-slug: octal-engine/${{values.app_name}}
     backstage.io/techdocs-ref: dir:.
+    sonarqube.org/project-key: ${{values.app_name}}
+    argocd/app-name: ${{values.app_name}}
+    grafana/dashboard-selector: "app-${{values.app_name}}-${{values.app_env}}"
+  links:
+    - url: https://${{values.app_name}}-${{values.app_env}}.gabrieleweka.dev
+      title: Live app
+      icon: web
+    - url: https://argocd.gabrieleweka.dev/applications/${{values.app_name}}
+      title: ArgoCD app
+      icon: rocket
+    - url: https://grafana.gabrieleweka.dev/d/app-${{values.app_name}}-${{values.app_env}}
+      title: Grafana dashboard
+      icon: dashboard
+    - url: https://sonar.gabrieleweka.dev/dashboard?id=${{values.app_name}}
+      title: SonarQube
+      icon: bug-report
+    - url: http://prometheus.gabrieleweka.dev/graph
+      title: Prometheus
+      icon: timer
 spec:
   type: service
   owner: development
