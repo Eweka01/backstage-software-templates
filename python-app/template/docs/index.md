@@ -48,3 +48,18 @@ All infrastructure is publicly reachable. Credentials below are read-only (safe 
 ## ArgoCD read-only scope
 
 The `viewer` account can **see** applications, repos, projects, and pod logs, but **cannot create, sync, or delete** anything. Safe to share for demos.
+
+## SonarQube read-only scope
+
+The `viewer` / `viewer123` account is in the `sonar-users` group with browse permission only — can see scan results, issues, and quality gates across all scaffolded projects, but cannot trigger scans, edit settings, or delete projects.
+
+## Why no Nexus on this demo
+
+A real production platform would put **Sonatype Nexus** in front of Docker Hub and PyPI to:
+
+- **Cache** upstream artifacts so builds keep working when external registries flap.
+- **Scan** every artifact on the way in (Nexus IQ for vulns + license).
+- **Air-gap support** — your runners pull only from Nexus, never directly from the internet.
+- **Promotion workflows** — `dev` repo → `staging` repo → `prod` repo with policy gates between.
+
+It's deliberately omitted on this single-laptop demo because Nexus 3 needs ~1 GB JVM heap and would starve the kind cluster of RAM. The same Helm values would deploy it on any real cluster — pattern travels, machine doesn't.
