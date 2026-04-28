@@ -195,8 +195,11 @@
         <a href="https://argocd.gabrieleweka.dev/applications/{{ app_name }}" target="_blank">
           <span class="label">Deployment</span>ArgoCD
         </a>
-        <a href="http://grafana.gabrieleweka.dev" target="_blank">
-          <span class="label">Metrics</span>Grafana
+        <a href="https://grafana.gabrieleweka.dev/d/app-{{ app_name }}-{{ app_env }}" target="_blank">
+          <span class="label">Metrics</span>Grafana (this app)
+        </a>
+        <a href="https://sonar.gabrieleweka.dev/dashboard?id={{ app_name }}" target="_blank">
+          <span class="label">Code quality</span>SonarQube
         </a>
         <a href="https://backstage.gabrieleweka.dev/docs/default/component/{{ app_name }}" target="_blank">
           <span class="label">Docs</span>TechDocs

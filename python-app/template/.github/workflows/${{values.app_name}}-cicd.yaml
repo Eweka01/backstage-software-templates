@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  lint:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,6 +27,11 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.python.version=3
 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Trivy filesystem scan
         uses: aquasecurity/trivy-action@0.35.0
         with:
